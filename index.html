@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Form Validation and Discount</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+    }
+    form {
+      max-width: 450px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .valid { color: green; }
+    .invalid { color: red; }
+    .total {
+      font-size: 18px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Checkout Form</h2>
+  <form id="checkoutForm">
+    <label>Full Name:</label>
+    <input type="text" id="name" placeholder="Enter your name">
+
+    <label>Email:</label>
+    <input type="email" id="email" placeholder="Enter your email">
+
+    <label>Address:</label>
+    <input type="text" id="address" placeholder="Enter your address">
+
+    <label>Credit Card Number:</label>
+    <input type="text" id="card" placeholder="Enter 16-digit card number">
+
+    <label>Discount Code:</label>
+    <input type="text" id="discountCode" placeholder="Enter discount code">
+    <button type="button" onclick="applyDiscount()">Apply Discount</button>
+
+    <p id="discountMsg" class="message"></p>
+
+    <div class="total">Total Price: ₹<span id="totalPrice">2000</span></div>
+
+    <button type="submit">Submit Order</button>
+    <p id="formMsg" class="message"></p>
+  </form>
+
+  <script>
+    // Base total price
+    let totalPrice = 2000;
+    let discountApplied = false;
+
+    // Function to apply discount
+    function applyDiscount() {
+      const discountInput = document.getElementById("discountCode").value.trim();
+      const discountMsg = document.getElementById("discountMsg");
+      const totalDisplay = document.getElementById("totalPrice");
+
+      if (discountApplied) {
+        discountMsg.textContent = "Discount already applied!";
+        discountMsg.className = "message invalid";
+        return;
+      }
+
+      if (discountInput === "SAVE10") {
+        const discountedPrice = totalPrice * 0.9;
+        totalDisplay.textContent = discountedPrice.toFixed(2);
+        discountMsg.textContent = "Discount code applied successfully! (10% off)";
+        discountMsg.className = "message valid";
+        discountApplied
